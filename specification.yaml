@@ -1,0 +1,31 @@
+asyncapi: 2.0.0
+info:
+  title: Example specification
+  version: '0.1.0'
+
+servers:
+  local:
+    url: "http://localhost:8080"
+    protocol: ws
+    description: Local mocked server
+
+channels:
+  chat:
+    publish:
+      message:
+        $ref: '#/components/messages/chat_message'
+
+    subscribe:
+      message:
+        oneOf:
+          - $ref: '#/components/messages/mission_start'
+          - $ref: '#/components/messages/mission_end'
+          - $ref: '#/components/messages/soldier_data'
+
+components:
+  messages:
+    chat_message:
+      name: ChatMessage
+      description: User sends message to the chat
+      payload:
+        type: string
