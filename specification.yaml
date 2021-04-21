@@ -13,19 +13,57 @@ channels:
   chat:
     publish:
       message:
-        $ref: '#/components/messages/chat_message'
+        oneOf:
+          - $ref: '#/components/messages/text_message'
+          - $ref: '#/components/messages/image_message'
 
     subscribe:
       message:
         oneOf:
-          - $ref: '#/components/messages/mission_start'
-          - $ref: '#/components/messages/mission_end'
-          - $ref: '#/components/messages/soldier_data'
+          - $ref: '#/components/messages/text_message'
+          - $ref: '#/components/messages/image_message'
+
 
 components:
   messages:
-    chat_message:
-      name: ChatMessage
-      description: User sends message to the chat
+    text_message:
+      name: TextMessage
+      description: User sends text to the chat
       payload:
         type: string
+      examples:
+        simple_message:
+          summary: Hello world chat message
+          value: "Hello World"
+        long_message:
+          summary: Long chat message
+          value: "The quick brown fox jumps over the lazy dog"
+
+    image_message:
+      name: ImageMessage
+      description: User sends an image to the chat
+      payload:
+        type: object
+        properties:
+          url:
+            type: string
+          size:
+            type: integer
+            maximum: 1000000
+            minimum: 0
+      examples:
+        small_image:
+          summary: A small image
+          value:
+            url: "https://picsum.photos/50"
+            size: 7500
+        standard_image:
+          summary: Standard image
+          value:
+            url: "https://picsum.photos/500"
+            size: 750000
+        large_image:
+          summary: Too large image for this API
+          value:
+            url: "https://picsum.photos/5000"
+            size: 75000000

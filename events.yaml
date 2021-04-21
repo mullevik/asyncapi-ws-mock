@@ -1,0 +1,37 @@
+events:
+
+  received_chat_message:
+    when: message_received
+    message_name: TextMessage
+    channel: chat
+
+    do:
+      - broadcast_example:
+          channel: chat
+          example_ref: '#/components/messages/text_message/examples/simple_message'
+      - wait:
+          seconds: 2
+      - broadcast_example:
+          channel: chat
+          example_ref: '#/components/messages/text_message/examples/long_message'
+      - wait:
+          seconds: 2
+      - broadcast_example:
+          channel: chat
+          example_ref: '#/components/messages/text_message/examples/long_message'
+      - wait:
+          seconds: 2
+      - broadcast_example:
+          channel: chat
+          example_ref: '#/components/messages/text_message/examples/long_message'
+
+  received_image_message:
+    when: message_received
+    message_name: ImageMessage
+    channel: chat
+
+    do:
+      - stop_command_chains: []
+      - broadcast_example:
+          channel: chat
+          example_ref: '#/components/messages/image_message/examples/small_image'
