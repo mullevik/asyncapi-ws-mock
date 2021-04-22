@@ -101,8 +101,9 @@ python mock_server.py example-config/specification.yaml example-config/events.ya
 ```
 #### Additional attributes
 - ```-p [int]```, ```--port [int]``` - specify your favorite port (default is 8080)
-- ```-l```, ```--loop``` - loop the sequence over and over (stop by KeyboardInterrupt)
 - ```--strict``` - exit when a validation error is raised (when the structure of a message is not according to the specification) (default behaviour is just a warning output message)
+- ```--debug``` - sets the ```logging``` level to ```logging.DEBUG``` (default is ```logging.INFO```)
+
 
 ### Run with docker
 
@@ -115,5 +116,5 @@ Note that the app inside the  container always loads files ```/app/config/specif
 
 Additional arguments can be passed to the container like so:
 ```
-docker run --rm -v $(pwd)/example-config:/app/config -p 40001:8080 -it asyncapi-ws-mock --strict
+docker run --rm -v $(pwd)/example-config:/app/config -p 40001:8080 -it asyncapi-ws-mock --strict --debug
 ```

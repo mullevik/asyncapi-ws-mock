@@ -20,10 +20,12 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--port', action="store", dest="port",
                         type=int, default="8080")
     parser.add_argument('--strict', action="store_true", default=False)
+    parser.add_argument('--debug', action="store_true", default=False)
     args = parser.parse_args()
 
     logging.basicConfig(format='[%(asctime)s] %(levelname).1s - %(message)s',
-                        level=logging.DEBUG)
+                        level=logging.DEBUG if args.debug else logging.INFO)
+    log.debug("Debug logging level is active")
 
     with open(args.specification_file, "r") as specification_file:
         specification = load(specification_file, Loader=Loader)
@@ -33,6 +35,8 @@ if __name__ == '__main__':
 
     channels = [os.path.join("/", channel_name)
                 for channel_name in specification["channels"].keys()]
+
+    log.info(f"Registered channels: {channels}")
 
     host = "0.0.0.0"
     server = WebSocketServer(

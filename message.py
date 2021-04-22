@@ -32,6 +32,10 @@ def validate_integer(payload: Any, payload_specification: Dict):
         assert payload <= payload_specification["maximum"]
 
 
+def validate_float(payload: Any, payload_specification: Dict):
+    assert isinstance(payload, float)
+
+
 def validate_payload(payload: Any, payload_specification: Dict,
                      full_specification: Dict) -> True:
     """Recursively validates a payload of a message.
@@ -73,6 +77,9 @@ def validate_payload(payload: Any, payload_specification: Dict,
 
     elif payload_type == "integer":
         validate_integer(payload, payload_specification)
+
+    elif payload_type == "number":
+        validate_float(payload, payload_specification)
 
     elif payload_type == "object":
 
